@@ -23,7 +23,7 @@ for (int g = 0; g < nameGroups.Count; g++)
 {
     var group = nameGroups[g];
     Console.WriteLine();
-    Console.Write($"Testing Group : {group[0]}".PadRight(26));
+    Console.Write("".PadRight(26));
     foreach (var algorithm in algorithms)
     {
         var name = algorithm.GetType().Name;
@@ -37,7 +37,7 @@ for (int g = 0; g < nameGroups.Count; g++)
         {
             var name1 = group[i];
             var name2 = group[j];
-            var comparisonText = $"  {name1} vs {name2} :".PadRight(25);
+            var comparisonText = $"{name1} vs {name2} :".PadRight(25);
             Console.Write(comparisonText);
 
             foreach (var algorithm in algorithms)
