@@ -1,6 +1,5 @@
 ﻿using F23.StringSimilarity;
 using F23.StringSimilarity.Interfaces;
-using System.Security.Cryptography;
 
 var algorithms = new IStringSimilarity[]
 {
@@ -14,10 +13,12 @@ var nameGroups = new List<List<string>>
 {
     new() {"John", "Jon", "Jonny", "Jonothan" },
     new() {"William", "Will", "Willy", "Bill", "Billy"},
-    new() {"Catherine", "Cat", "Cathy", "Cat", "Kat"}
+    new() {"Catherine", "Cat", "Cathy", "Cat", "Kat"},
+    new() {"Alexander", "Alex", "Xander"},
+    new() {"Christine", "Christeen", "Chris" , "Crissy" , "Christie" }
 };
 
-
+var defaultColor = Console.ForegroundColor;
 
 for (int g = 0; g < nameGroups.Count; g++)
 {
@@ -27,7 +28,8 @@ for (int g = 0; g < nameGroups.Count; g++)
     foreach (var algorithm in algorithms)
     {
         var name = algorithm.GetType().Name;
-        Console.Write($"{name.Substring(0,System.Math.Min(name.Length, 7))}".PadRight(8));
+        Console.Write($"{name[..Math.Min(name.Length, 7)]}".PadRight(8));
+
     }
     Console.WriteLine();
 
@@ -45,7 +47,14 @@ for (int g = 0; g < nameGroups.Count; g++)
                 //Console.Write($"{algorithm.GetType().Name}");
                 var similarity = algorithm.Similarity(name1, name2);
                 var simText = $"{similarity:p}".PadLeft(8);
+
+                if (similarity >= .90) 
+                    Console.ForegroundColor = ConsoleColor.Green;
+                else if (similarity >= .8)
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+
                 Console.Write(simText);
+                Console.ForegroundColor = defaultColor;
             }
 
             Console.WriteLine();
