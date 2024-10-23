@@ -23,7 +23,13 @@ for (int g = 0; g < nameGroups.Count; g++)
 {
     var group = nameGroups[g];
     Console.WriteLine();
-    Console.WriteLine($"Testing Group : {group[0]}");
+    Console.Write($"Testing Group : {group[0]}".PadRight(26));
+    foreach (var algorithm in algorithms)
+    {
+        var name = algorithm.GetType().Name;
+        Console.Write($"{name.Substring(0,System.Math.Min(name.Length, 7))}".PadRight(8));
+    }
+    Console.WriteLine();
 
     for (int i = 0; i < group.Count; i++)
     {
