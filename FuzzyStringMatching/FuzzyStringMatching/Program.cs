@@ -17,29 +17,32 @@ var nameGroups = new List<List<string>>
     new() {"Catherine", "Cat", "Cathy", "Cat", "Kat"}
 };
 
-foreach (var algorithm in algorithms)
+
+
+for (int g = 0; g < nameGroups.Count; g++)
 {
+    var group = nameGroups[g];
     Console.WriteLine();
-    Console.WriteLine($"{algorithm.GetType().Name}");
-    Console.WriteLine(new string('-', algorithm.GetType().Name.Length));
+    Console.WriteLine($"Testing Group : {group[0]}");
 
-    for (int g = 0; g < nameGroups.Count; g++)
+    for (int i = 0; i < group.Count; i++)
     {
-        var group = nameGroups[g];
-        Console.WriteLine();
-        Console.WriteLine($"Testing Group : {group[0]}");
-
-        for (int i = 0; i < group.Count; i++)
+        for (int j = i + 1; j < group.Count; j++)
         {
-            for (int j = i + 1; j < group.Count; j++)
-            {
-                var name1 = group[i];
-                var name2 = group[j];
-                var similarity = algorithm.Similarity(name1, name2);
+            var name1 = group[i];
+            var name2 = group[j];
+            var comparisonText = $"  {name1} vs {name2} :".PadRight(25);
+            Console.Write(comparisonText);
 
-                Console.WriteLine($"   {name1} vs {name2} : {similarity:p}");
-                
+            foreach (var algorithm in algorithms)
+            {
+                //Console.Write($"{algorithm.GetType().Name}");
+                var similarity = algorithm.Similarity(name1, name2);
+                var simText = $"{similarity:p}".PadLeft(8);
+                Console.Write(simText);
             }
+
+            Console.WriteLine();
         }
     }
 }
