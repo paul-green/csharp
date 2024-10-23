@@ -1,12 +1,15 @@
 ﻿using F23.StringSimilarity;
 using F23.StringSimilarity.Interfaces;
+using FuzzyStringMatching;
 
-var algorithms = new IStringSimilarity[]
+var algorithms = new Dictionary<string, IStringSimilarity>()
 {
-    new Cosine(),
-    new Jaccard(),
-    new JaroWinkler(),
-    new NormalizedLevenshtein(),
+    {"Cosine", new Cosine() },
+    {"Jaccard", new Jaccard() },
+    {"J-Winkler", new JaroWinkler() },
+    {"N-Lev", new NormalizedLevenshtein() },
+    {"First4", new FirstCharSimilarity(4) },
+    {"First2", new FirstCharSimilarity(2) }
 };
 
 var nameGroups = new List<List<string>>
@@ -27,7 +30,7 @@ for (int g = 0; g < nameGroups.Count; g++)
     Console.Write("".PadRight(26));
     foreach (var algorithm in algorithms)
     {
-        var name = algorithm.GetType().Name;
+        var name = algorithm.Key;
         Console.Write($"{name[..Math.Min(name.Length, 7)]}".PadRight(8));
 
     }
@@ -45,7 +48,7 @@ for (int g = 0; g < nameGroups.Count; g++)
             foreach (var algorithm in algorithms)
             {
                 //Console.Write($"{algorithm.GetType().Name}");
-                var similarity = algorithm.Similarity(name1, name2);
+                var similarity = algorithm.Value.Similarity(name1, name2);
                 var simText = $"{similarity:p}".PadLeft(8);
 
                 if (similarity >= .90) 
