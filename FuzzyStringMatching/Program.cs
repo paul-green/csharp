@@ -16,9 +16,11 @@ var nameGroups = new List<List<string>>
 {
     new() {"John", "Jon", "Jonny", "Jonothan" },
     new() {"William", "Will", "Willy", "Bill", "Billy"},
-    new() {"Catherine", "Cat", "Cathy", "Cat", "Kat"},
+    new() {"Catherine", "Cat", "Cathy", "Kate", "Kat"},
     new() {"Alexander", "Alex", "Xander"},
-    new() {"Christine", "Christeen", "Chris" , "Crissy" , "Christie" }
+    new() {"Christine", "Christeen", "Chris" , "Crissy" , "Christie" },
+    new() {"James", "Jim", "Jimmy" },
+    new() {"Robert", "Rob", "Robby", "Robbie", "Bob" }
 };
 
 var defaultColor = Console.ForegroundColor;
