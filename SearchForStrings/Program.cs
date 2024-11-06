@@ -1,6 +1,10 @@
 ﻿using System.Buffers;
 using System.Diagnostics;
 
+var TimeFrame = TimeSpan.FromMilliseconds(100);
+
+List<(string mehod, long count)> timings = new();
+
 var values = new[] { "John", "Paul", "George", "Ringo" };
 var searchValues = SearchValues.Create(values, StringComparison.OrdinalIgnoreCase);
 TimeThis(() => searchValues.Contains("ringo"), "SearchValues.Contains");
@@ -11,7 +15,11 @@ TimeThis(() => hashSetValues.Contains("ringo"), "HashSet.Contains");
 var listValues = values.ToList();
 TimeThis(()=> listValues.Any(v=>v.Equals("ringo", StringComparison.OrdinalIgnoreCase)), "List.Any()");
 
-
+Console.WriteLine($"Iterations in {TimeFrame.TotalMilliseconds}ms:");
+foreach (var time in timings.OrderByDescending(o => o.count))
+{
+    Console.WriteLine($"{time.mehod.PadRight(25)} : {time.count}");
+}
 
 
 
@@ -19,11 +27,11 @@ void TimeThis(Action action, string method)
 {
     var sw = Stopwatch.StartNew();
     int c = 0;
-    while (sw.ElapsedMilliseconds < 100)
+    while (sw.Elapsed < TimeFrame)
     {
         action();
         c++;
     }
     sw.Stop();
-    Console.WriteLine($"{method.PadRight(25)} did {c} in {sw.ElapsedMilliseconds}ms");
+    timings.Add(new (method, c));
 }
