@@ -13,7 +13,10 @@ var hashSetValues = new HashSet<string>(values, StringComparer.OrdinalIgnoreCase
 TimeThis(() => hashSetValues.Contains("ringo"), "HashSet.Contains");
 
 var listValues = values.ToList();
-TimeThis(()=> listValues.Any(v=>v.Equals("ringo", StringComparison.OrdinalIgnoreCase)), "List.Any()");
+TimeThis(() => listValues.Any(v => v.Equals("ringo", StringComparison.OrdinalIgnoreCase)), "List.Any");
+
+var sortedArray = values.ToList().Order().ToList();
+TimeThis(() => sortedArray.BinarySearch("ringo", StringComparer.OrdinalIgnoreCase), "List.BinarySearch");
 
 Console.WriteLine($"Iterations in {TimeFrame.TotalMilliseconds}ms:");
 foreach (var time in timings.OrderByDescending(o => o.count))
